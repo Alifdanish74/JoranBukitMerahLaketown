@@ -1,0 +1,247 @@
+<%-- 
+    Document   : Home
+    Created on : Jul 2, 2021, 12:44:00 AM
+    Author     : Alif Danish
+
+        FOR LAKETOWN
+--%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<sql:setDataSource var="myDatasource"
+                   driver="org.apache.derby.jdbc.ClientDriver"
+                   url="jdbc:derby://localhost:1527/laketown" user="app"
+                   password="app"/>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Joran LakeTown</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" />    
+	<link href="css/templatemo-style.css" rel="stylesheet" />
+
+    <link href="css/all.min.css" rel="stylesheet" />
+        <style>
+            h4{
+                height: 54px;
+            }
+                        /* The Modal (background) */
+            .modal {
+              display: none; /* Hidden by default */
+              position: fixed; /* Stay in place */
+              z-index: 1; /* Sit on top */
+              padding-top: 100px; /* Location of the box */
+              left: 0;
+              top: 0;
+              width: 100%; /* Full width */
+              height: 100%; /* Full height */
+              overflow: auto; /* Enable scroll if needed */
+              background-color: rgb(0,0,0); /* Fallback color */
+              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .modal-content {
+              display: block;
+              background-color: #fefefe;
+              margin: auto;
+              padding: 20px;
+              border: 1px solid #888;
+              width: 50%;
+            }
+
+            /* The Close Button */
+            .close {
+              color: #aaaaaa;
+              float: right;
+              font-size: 28px;
+              font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+              color: #000;
+              text-decoration: none;
+              cursor: pointer;
+            }
+        </style>
+        
+</head>
+<!--
+
+-->
+<body> 
+    
+    <div class="container">
+        <!-- Top box -->
+        <!-- Logo & Site Name -->
+        <div class="placeholder">
+            
+            <div class="parallax-window" data-parallax="scroll" data-image-src="img/bgjoran.jpg">
+                <div class="tm-header">
+                    <div>
+                        <h1 class="tm-site-title">JORAN BUKIT MERAH</h1>
+                        <h1 class="tm-site-description">LAKETOWN</h1>	     
+                       Welcome <%=request.getAttribute("email") %>
+                       
+                    </div>
+                    <div class="row tm-header-inner" >   
+                        <div class="col-md-6 col-12 tm-nav">
+                            <ul class="tm-nav-ul">
+                                <li class="tm-nav-li"><a href="Home.jsp" class="tm-nav-link active " style="font-size:20px" >Home</a></li>
+                                <li class="tm-nav-li"><a href="about.jsp" class="tm-nav-link" style="font-size:20px">About</a></li>
+                                <li class="tm-nav-li"><a href="contact.jsp" class="tm-nav-link" style="font-size:20px">Contact</a></li>
+                                <li class="dropdown tm-nav-li">
+                                    <a href="javascript:void(0)" class="tm-nav-link" style="font-size:20px">Menu</a>
+                                    <div class="dropdown-content">
+                                        <button id="myBtn" class="tm-nav-link" style="color:black " >PROFILE SETTING</button>
+                                        <div id="myModal" class="modal">
+                                            <!-- Modal content -->
+                                            <div class="wrapper fadeInDown modal-content">
+                                              <span class="close">&times;</span>
+                                              <p style="text-align:center">PROFILE SETTING</p>
+                                       
+                    
+                                            <form name="form" action="UserVerifyServlet" method="post" >
+
+                                            <input type="text" id="login" class="fadeIn second" name="email" required="" placeholder="email" >
+
+                                            <input type="password" id="password" class="fadeIn second " name="password" required="" placeholder="password">
+
+
+                                            <input type="submit" class="fadeIn fourth" value="Login">
+                                            </form>
+                                                
+                                            </div>
+
+                                          </div>
+                                        <a href="LogoutServlet" class="tm-nav-link">Logout</a>
+                                    </div>
+                            </ul>
+                        </div>	        
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <main>
+            <header class="row tm-welcome-section">
+                <h2 class="col-12 text-center tm-section-title">Welcome To Joran Bukit Merah LakeTown</h2>
+                <h5 class="col-12 text-center">Kami dari Joran Bukit Merah Laketown menyediakan pelbagai pertandingan memancing dengan tawaran hadiah yang lumayan
+                . Kami juga ada menyediakan perkhidmatan kolam pancing yang pelbagai jenis serta pada kadar harga yang berpatutan</h5>
+                <p class="col-12 text-center"></p>
+                
+                
+                
+            </header>
+                
+            <div class="tm-paging-links">
+                <nav>
+                    <ul>
+                        <li class="tm-paging-item"><a href="Home.jsp" class="tm-paging-link active">Fishing Tournament</a></li>
+                        <li class="tm-paging-item"><a href="pondhome.jsp" class="tm-paging-link">Booking Pond</a></li>
+                    </ul>
+                </nav>
+            </div>
+                
+            <!-- Gallery -->
+            <div class="row tm-gallery">
+                <!-- gallery page 1 -->
+                
+                <div id="tm-gallery-page-event" class="tm-gallery-page">
+                    
+                    <sql:query var="result" dataSource="${myDatasource}">
+                                SELECT * FROM EVENT 
+                               
+                            </sql:query>  
+                    <c:forEach var="row" items="${result.rows}">
+                        <div class="card">
+                    <article class="card col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+                        <figure>
+                            <img src="DisplayImageServlet?id= ${row.id}"  class="img-fluid tm-gallery-img"/> 
+                           <!-- <img src="img/poster.jpg" alt="Image" class="img-fluid tm-gallery-img" /> -->
+                            <figcaption>
+                                
+                                <h4 class="tm-gallery-title"><c:out value="${row.eventname}"/></h4>
+                                <p class="tm-gallery-description text-align:center"><c:out value="${row.description}"/></p>
+                                <p class="tm-gallery-description">Date: <c:out value="${row.eventdate}"/></p>
+                                <p style="height:30px" class="tm-gallery-description">Location: <c:out value="${row.location}"/></p>
+                                <a href="daftarevent.jsp?id=${row.id}"><button class="button" ><span>Register </span></button></a>
+                            </figcaption>
+                        </figure>
+                    </article>
+                        </div>
+                   </c:forEach>
+                    
+                    
+                </div> <!-- gallery page 1 -->
+                    
+                
+            </div>
+            <div class="tm-section tm-container-inner">
+                <div class="row">
+                    <div class="col-md-6">
+                        <figure class="tm-description-figure">
+                            <img src="img/kolam.jpg" alt="Image" class="img-fluid" />
+                        </figure>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="tm-description-box"> 
+                            <h4 class="tm-gallery-title">Kolam Pancing Joran Bukit Merah LakeTown</h4>
+                            <p class="tm-mb-45">Kami menyediakan pengalaman memancing di kolam yang sangat menarik dan anda pasti berpuas hati !</p>
+                            <a href="about.jsp" class="tm-btn button tm-btn-default tm-right">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+            
+        <footer class="tm-footer text-center">
+        </footer>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/parallax.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Handle click on paging links
+            $('.tm-paging-link').click(function(e){
+                
+                var page = $(this).text().toLowerCase();
+                $('.tm-gallery-page').addClass('hidden');
+                $('#tm-gallery-page-' + page).removeClass('hidden');
+                $('.tm-paging-link').removeClass('active');
+                $(this).addClass("active");
+            });
+        });
+                // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+</body>
+</html>
